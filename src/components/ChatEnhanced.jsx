@@ -32,30 +32,26 @@ export default function ChatEnhanced({
     if (el) el.scrollTop = el.scrollHeight;
   };
 
-  // When a new message is added or booking confirms — always scroll
+  // New message added, cards loaded, or booking confirmed → scroll
   useEffect(() => {
-    const lastMsg = chatMessages[chatMessages.length - 1];
-    if (lastMsg?.streaming) return;
-    setTimeout(scrollToBottom, 50);
+    setTimeout(scrollToBottom, 80);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chatMessages.length, tripOptions, bookingStatus]);
 
-  // Card selection triggers animations that shift layout — wait for them to settle
+  // Trip selected → wait for card animations to settle then scroll
   useEffect(() => {
     if (!selectedTrip) return;
-    setTimeout(scrollToBottom, 300);
+    setTimeout(scrollToBottom, 400);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedTrip]);
 
-  // During streaming — scroll only if already near the bottom
+  // Streaming in progress → always follow the bottom
   useEffect(() => {
     const lastMsg = chatMessages[chatMessages.length - 1];
     if (!lastMsg?.streaming) return;
     const el = scrollContainerRef.current;
     if (!el) return;
-    if (el.scrollHeight - el.scrollTop - el.clientHeight < 150) {
-      el.scrollTop = el.scrollHeight;
-    }
+    el.scrollTop = el.scrollHeight;
   }, [chatMessages]);
 
   const handleSend = () => {
