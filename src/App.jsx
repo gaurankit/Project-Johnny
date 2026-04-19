@@ -7,7 +7,7 @@ import Landing from './components/Landing';
 import ChatEnhanced from './components/ChatEnhanced';
 import LoadingStages from './components/LoadingStages';
 
-const API_KEY = 'AIzaSyAbvS2R34oEkfOW3rnW-58DoITdyLccvX0';
+const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
 function App() {
   const [stage, setStage] = useState('landing');
